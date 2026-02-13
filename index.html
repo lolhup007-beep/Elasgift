@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-family: Arial, sans-serif;
+        background-color: #ffe6f0; /* 🎨 Background color */
+        overflow: hidden;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    img {
+        width: 300px; /* GIF size */
+        height: auto;
+    }
+
+    h1 {
+        font-size: 2em;
+        margin: 20px 0;
+    }
+
+    .buttons {
+        margin-top: 20px;
+    }
+
+    button {
+        font-size: 20px;
+        padding: 15px 30px;
+        margin: 10px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #yesBtn {
+        background-color: #ff4d6d;
+        color: white;
+    }
+
+    #noBtn {
+        background-color: #999;
+        color: white;
+    }
+
+    .fullscreen-yes {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        font-size: 50px;
+        background-color: #ff4d6d;
+        color: white;
+        border-radius: 0;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    #finalMessage {
+        font-size: 24px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<!-- 💖💖💖 CUSTOMIZE HERE 💖💖💖 -->
+<script>
+const CONFIG = {
+    firstGif: "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif", // Starting GIF
+    yesGif: "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif", // GIF after clicking YES
+    mainText: "Will you be my Valentine?",
+    yesText: "Yes 💖",
+    noText: "No 😢",
+    finalText: "YAYYYYY!!! I LOVE YOU 💕"
+};
+</script>
+<!-- 💖💖💖 END CUSTOMIZE 💖💖💖 -->
+
+<div class="container" id="mainContainer">
+    <img id="mainGif" src="" alt="Valentine GIF">
+    <h1 id="question"></h1>
+
+    <div class="buttons">
+        <button id="yesBtn"></button>
+        <button id="noBtn"></button>
+    </div>
+
+    <div id="finalMessage"></div>
+</div>
+
+<script>
+    // Apply custom text & GIF
+    document.getElementById("mainGif").src = CONFIG.firstGif;
+    document.getElementById("question").innerText = CONFIG.mainText;
+    document.getElementById("yesBtn").innerText = CONFIG.yesText;
+    document.getElementById("noBtn").innerText = CONFIG.noText;
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const gif = document.getElementById("mainGif");
+    const finalMessage = document.getElementById("finalMessage");
+
+    let noClickCount = 0;
+    let yesSize = 1;
+    let noSize = 1;
+
+    noBtn.addEventListener("click", () => {
+        noClickCount++;
+
+        yesSize += 0.3;
+        noSize -= 0.2;
+
+        yesBtn.style.transform = `scale(${yesSize})`;
+        noBtn.style.transform = `scale(${noSize})`;
+
+        if (noClickCount >= 5) {
+            noBtn.classList.add("hidden");
+            yesBtn.classList.add("fullscreen-yes");
+            yesBtn.innerText = CONFIG.yesText;
+        }
+    });
+
+    yesBtn.addEventListener("click", () => {
+        gif.src = CONFIG.yesGif;
+        document.querySelector(".buttons").classList.add("hidden");
+        document.getElementById("question").classList.add("hidden");
+        finalMessage.innerText = CONFIG.finalText;
+    });
+</script>
+
+</body>
+</html>
